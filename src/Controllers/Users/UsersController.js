@@ -98,7 +98,7 @@ module.exports = {
         res.status(400).json(json);
       }
     } else {
-      json.error = "Parâmetros inválidos";
+      json.error = "Campos Obrigatórios";
       res.status(400).json(json);
     }
   },
