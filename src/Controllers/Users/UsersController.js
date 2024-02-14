@@ -12,6 +12,7 @@ module.exports = {
 
     for (const i in users) {
       json.result.push({
+        id: users[i].id,
         name: users[i].name,
         nameRBX: users[i].nameRBX,
         email: users[i].email,
