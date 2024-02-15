@@ -11,6 +11,7 @@ module.exports = {
 
     for (const i in account) {
       json.result.push({
+        id: account[i].id,
         holder: account[i].holder,
         typeAccount: account[i].type_account,
         numberAccount: account[i].number_account,
