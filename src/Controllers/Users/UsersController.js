@@ -98,7 +98,7 @@ module.exports = {
         res.status(400).json(json);
       }
     } else {
-      json.error = "Campos Obrigatórios";
+      json.error = "Preencha todos os campos!";
       res.status(400).json(json);
     }
   },
