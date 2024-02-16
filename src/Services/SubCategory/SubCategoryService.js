@@ -22,6 +22,28 @@ module.exports = {
     });
   },
 
+  getSubCategoryByCategory: (category) => {
+    return new Promise((accepted, reject) => {
+      db.query(
+        `
+          SELECT s.id, s.subCategory, s.category_id
+          FROM subcategory s
+          JOIN category c ON s.category_id = c.id
+          WHERE c.category = ?;
+        `,
+        [category],
+        (error, results) => {
+          if (error) {
+            reject(error);
+            console.log("Erro ao buscar subcategorias");
+          } else {
+            accepted(results);
+          }
+        }
+      );
+    });
+  },
+
   insert: (subcategory, categoryID) => {
     return new Promise((accepted, reject) => {
       db.query(
@@ -51,7 +73,7 @@ module.exports = {
           if (error) {
             reject(error);
             console.log("Erro ao deletar sub categorias");
-          }else{
+          } else {
             accepted(results);
           }
         }

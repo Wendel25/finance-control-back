@@ -14,6 +14,37 @@ module.exports = {
     });
   },
 
+  getBank: () => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "SELECT bank FROM account WHERE active = 1",
+        (error, results) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(results);
+          }
+        }
+      );
+    });
+  },
+
+  getDataByBank: (bank) => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "select number_account, agency from account where bank = ?",
+        [bank],
+        (error, results) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(results);
+          }
+        }
+      );
+    });
+  },
+
   insert: (holder, type_account, number_account, agency, bank) => {
     return new Promise((accepted, rejected) => {
       db.query(

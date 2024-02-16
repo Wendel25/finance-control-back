@@ -20,6 +20,29 @@ module.exports = {
     res.json(json);
   },
 
+  getSubCategoryByCategory: async (req, res) => {
+    const json = {
+      error: "",
+      result: {},
+    };
+
+    const category = req.params.category;
+
+    try {
+      const subCategory = await subcategoryService.getSubCategoryByCategory(
+        category
+      );
+
+      res.json({
+        subcategory: subCategory,
+      });
+
+    } catch (error) {
+      console.error("Erro ao obter subcategoria:", error);
+      return res.status(500).json({ error: "Erro ao obter subcategoria" });
+    }
+  },
+
   insert: async (req, res) => {
     const json = {
       error: "",
@@ -39,7 +62,7 @@ module.exports = {
         message: "Sub categoria registrada com sucesso",
         subcategory: {
           subcategory,
-          categoryID
+          categoryID,
         },
       });
     } catch (error) {

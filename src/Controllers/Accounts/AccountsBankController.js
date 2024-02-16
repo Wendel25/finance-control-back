@@ -24,6 +24,48 @@ module.exports = {
     res.json(json);
   },
 
+  getBank: async (req, res) => {
+    try {
+      const json = {
+        error: "",
+        result: [],
+      };
+
+      const bank = await accountBankService.getBank();
+
+      for (const i in bank) {
+        json.result.push({
+          bank: bank[i].bank,
+        });
+      }
+
+      res.json(json);
+    } catch (error) {
+      console.error("Erro ao buscar bancos:", error);
+      res.status(500).json({ error: "Erro interno do servidor" });
+    }
+  },
+
+  getDataByBank: async (req, res) => {
+    const json = {
+      error: "",
+      result: [],
+    };
+  
+    const bankName = req.params.bank;
+  
+    try {
+      const accounts = await accountBankService.getDataByBank(bankName);
+  
+      res.json({
+        accounts: accounts,
+      });
+    } catch (error) {
+      console.error("Erro ao buscar agência bancária:", error);
+      res.status(500).json({ error: "Erro interno do servidor" });
+    }
+  },
+
   insetAccount: async (req, res) => {
     const { holder, type_account, number_account, agency, bank } = req.body;
 
