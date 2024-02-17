@@ -17,7 +17,7 @@ const providersController = require("./Controllers/Providers/ProvidersController
 router.post("/login", loginController.login);
 
 // Middleware de autenticação aplicado a todas as rotas
-//router.use(authMiddleware);
+router.use(authMiddleware);
 
 // Categorias
 router.get("/categories", categoryController.getCategory);
