@@ -23,7 +23,11 @@ module.exports = {
         const user = results[0];
 
         if (!user) {
-          return res.status(401).json({ error: "Email incorreto" });
+          return res.status(401).json({ error: "E-mail incorreto" });
+        }
+
+        if (user.active !== 1) {
+          return res.status(401).json({ error: "Usuário desativado" });
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
@@ -31,13 +35,9 @@ module.exports = {
           return res.status(401).json({ error: "Senha incorreta" });
         }
 
-        console.log("Usuário autenticado:", user.email);
-
         const token = jwt.sign({ userId: user.id }, jwtSecret, {
           expiresIn: "24h",
         });
-
-        console.log("Token gerado:", token);
 
         res.json({
           token,

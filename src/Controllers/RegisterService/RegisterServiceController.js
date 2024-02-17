@@ -28,6 +28,7 @@ module.exports = {
         date_final: services[i].date_final,
         observation: services[i].observation,
         proof: services[i].proof,
+        user_create: services[i].user_create,
         created_at: services[i].created_at,
       });
     }
