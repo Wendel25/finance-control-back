@@ -44,6 +44,7 @@ router.put("/account/:id", accountsBankController.update);
 
 //Prestadores de serviço
 router.get("/providers", providersController.getProviders);
+router.post("/new-provider", providersController.insert);
 
 // Registros de serviços realizados
 router.get("/services", registerServiceController.getServices);
