@@ -3,7 +3,7 @@ const db = require("../../db");
 module.exports = {
   getAccount: () => {
     return new Promise((accepted, rejected) => {
-      db.query("SELECT * FROM account", (error, results) => {
+      db.query("SELECT * FROM account ORDER BY id DESC", (error, results) => {
         if (error) {
           rejected(error);
           return;
@@ -17,7 +17,7 @@ module.exports = {
   getBank: () => {
     return new Promise((resolve, reject) => {
       db.query(
-        "SELECT bank FROM account WHERE active = 1",
+        "SELECT bank FROM account WHERE active = 1 ORDER BY id DESC",
         (error, results) => {
           if (error) {
             reject(error);

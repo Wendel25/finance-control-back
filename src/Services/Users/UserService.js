@@ -3,7 +3,7 @@ const db = require("../../db");
 module.exports = {
   getUsers: () => {
     return new Promise((accepted, reject) => {
-      db.query("SELECT * FROM users", (error, results) => {
+      db.query("SELECT * FROM users ORDER BY id DESC", (error, results) => {
         if (error) {
           reject(error);
           return;

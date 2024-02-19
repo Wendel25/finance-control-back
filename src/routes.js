@@ -44,7 +44,12 @@ router.put("/account/:id", accountsBankController.update);
 
 //Prestadores de serviço
 router.get("/providers", providersController.getProviders);
+router.get("/providers-legal", providersController.getProvidersLegal);
+router.get("/provider", providersController.getProvidersSingle);
 router.post("/new-provider", providersController.insert);
+router.post("/new-provider-legal", providersController.insertLegalPerson);
+router.put("/update-provider/:id", providersController.update);
+router.put("/update-provider-legal/:id", providersController.updateLegal);
 
 // Registros de serviços realizados
 router.get("/services", registerServiceController.getServices);

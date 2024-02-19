@@ -8,7 +8,8 @@ module.exports = {
         SELECT s.id, s.subCategory, GROUP_CONCAT(c.category) AS category_name
         FROM subcategory s
         JOIN category c ON s.category_id = c.id
-        GROUP BY s.id, s.subCategory;
+        GROUP BY s.id, s.subCategory
+        ORDER BY id DESC;
       `,
         (error, results) => {
           if (error) {

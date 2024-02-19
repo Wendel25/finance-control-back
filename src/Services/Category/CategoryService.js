@@ -3,7 +3,7 @@ const db = require("../../db");
 module.exports = {
   getCategories: () => {
     return new Promise((accepted, reject) => {
-      db.query("SELECT * FROM category", (error, results) => {
+      db.query("SELECT * FROM category ORDER BY id DESC", (error, results) => {
         if (error) {
           reject(error);
           return;
