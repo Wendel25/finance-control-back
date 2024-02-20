@@ -12,6 +12,7 @@ const subcategoryController = require("./Controllers/SubCategory/SubCategoryCont
 const accountsBankController = require("./Controllers/Accounts/AccountsBankController");
 const registerServiceController = require("./Controllers/RegisterService/RegisterServiceController");
 const providersController = require("./Controllers/Providers/ProvidersController");
+const suppliersController = require("./Controllers/Supplier/SupplierController");
 
 // Login
 router.post("/login", loginController.login);
@@ -27,8 +28,8 @@ router.delete("/category/:id", categoryController.delete);
 // Sub Categorias
 router.get("/subcategories", subcategoryController.getSubCategory);
 router.get("/subcategory/:category", subcategoryController.getSubCategoryByCategory);
-router.post("/new-subcategory", subcategoryController.insert);
-router.delete("/subcategory/:id", subcategoryController.delete);
+router.post("/new-subcategoategry", subcategoryController.insert);
+router.delete("/subcory/:id", subcategoryController.delete);
 
 // Usuarios
 router.get("/users", userController.getUsers);
@@ -42,7 +43,7 @@ router.get("/bank/:bank", accountsBankController.getDataByBank);
 router.post("/new-accounts", accountsBankController.insetAccount);
 router.put("/account/:id", accountsBankController.update);
 
-//Prestadores de serviço
+// Prestadores de serviço
 router.get("/providers", providersController.getProviders);
 router.get("/providers-legal", providersController.getProvidersLegal);
 router.get("/provider", providersController.getProvidersSingle);
@@ -50,6 +51,11 @@ router.post("/new-provider", providersController.insert);
 router.post("/new-provider-legal", providersController.insertLegalPerson);
 router.put("/update-provider/:id", providersController.update);
 router.put("/update-provider-legal/:id", providersController.updateLegal);
+
+// Fornecedores
+router.get("/suppliers", suppliersController.get);
+router.get("/supplier", suppliersController.getSingle);
+router.post("/new-suppliers", suppliersController.insert);
 
 // Registros de serviços realizados
 router.get("/services", registerServiceController.getServices);

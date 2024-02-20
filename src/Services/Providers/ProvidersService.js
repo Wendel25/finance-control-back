@@ -4,7 +4,7 @@ module.exports = {
   getDataProviders: (page, pageSize) => {
     return new Promise((resolve, reject) => {
       const offset = (page - 1) * pageSize;
-      const query = `SELECT * FROM physical_person ORDER BY id DESC LIMIT ? OFFSET ?`;
+      const query = `SELECT * FROM sp_physical_person ORDER BY id DESC LIMIT ? OFFSET ?`;
 
       db.query(query, [pageSize, offset], (error, results) => {
         if (error) {
@@ -20,7 +20,7 @@ module.exports = {
   getUserByCPF: (cpf) => {
     return new Promise((accepted, reject) => {
       db.query(
-        "SELECT * FROM physical_person WHERE cpf = ?",
+        "SELECT * FROM sp_physical_person WHERE cpf = ?",
         [cpf],
         (error, results) => {
           if (error) {
@@ -37,7 +37,7 @@ module.exports = {
   getProvidersSingle: () => {
     return new Promise((resolve, reject) => {
       db.query(
-        "SELECT name FROM physical_person where active = 1 ORDER BY id DESC",
+        "SELECT name FROM sp_physical_person where active = 1 ORDER BY id DESC",
         (error, results) => {
           if (error) {
             reject(error);
@@ -67,7 +67,7 @@ module.exports = {
   ) => {
     return new Promise((accepted, reject) => {
       const data =
-        "INSERT INTO physical_person (name, cpf, group_name, birth_date, number_phone, number_phone_reserve, cep, city, district, localization, number_localization, service_provider, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO sp_physical_person (name, cpf, group_name, birth_date, number_phone, number_phone_reserve, cep, city, district, localization, number_localization, service_provider, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       db.query(
         data,
         [
@@ -116,7 +116,7 @@ module.exports = {
   ) => {
     return new Promise((accepted, reject) => {
       const query =
-        "UPDATE physical_person SET name = ?, cpf = ?, group_name = ?, birth_date = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?, number_localization = ?, service_provider = ?, observation = ?, active = ? WHERE id = ?";
+        "UPDATE sp_physical_person SET name = ?, cpf = ?, group_name = ?, birth_date = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?, number_localization = ?, service_provider = ?, observation = ?, active = ? WHERE id = ?";
 
       db.query(
         query,
@@ -169,7 +169,7 @@ module.exports = {
   ) => {
     return new Promise((accepted, reject) => {
       const data =
-        "INSERT INTO legal_person (social_reason, fantasy_name, cnpj, state_registration, group_name, number_phone, number_phone_reserve, cep, city, district, localization, number_localization, service_provider, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO sp_legal_person (social_reason, fantasy_name, cnpj, state_registration, group_name, number_phone, number_phone_reserve, cep, city, district, localization, number_localization, service_provider, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       db.query(
         data,
         [
@@ -203,7 +203,7 @@ module.exports = {
   getDataProvidersLegal: (page, pageSize) => {
     return new Promise((resolve, reject) => {
       const offset = (page - 1) * pageSize;
-      const query = `SELECT * FROM legal_person ORDER BY id DESC LIMIT ? OFFSET ?`;
+      const query = `SELECT * FROM sp_legal_person ORDER BY id DESC LIMIT ? OFFSET ?`;
 
       db.query(query, [pageSize, offset], (error, results) => {
         if (error) {
@@ -236,7 +236,7 @@ module.exports = {
   ) => {
     return new Promise((accepted, reject) => {
       const query =
-        "UPDATE legal_person SET social_reason = ?, fantasy_name = ?, cnpj = ?, state_registration = ?, group_name = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?,  number_localization = ?, service_provider = ?, observation = ?, active = ? WHERE id = ?";
+        "UPDATE sp_legal_person SET social_reason = ?, fantasy_name = ?, cnpj = ?, state_registration = ?, group_name = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?,  number_localization = ?, service_provider = ?, observation = ?, active = ? WHERE id = ?";
 
       db.query(
         query,
