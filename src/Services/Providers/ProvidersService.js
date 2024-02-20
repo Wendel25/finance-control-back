@@ -53,6 +53,7 @@ module.exports = {
   insert: (
     name,
     cpf,
+    group_name,
     birth_date,
     number_phone,
     number_phone_reserve,
@@ -60,16 +61,19 @@ module.exports = {
     city,
     district,
     localization,
-    service_provider
+    number_localization,
+    service_provider,
+    observation
   ) => {
     return new Promise((accepted, reject) => {
       const data =
-        "INSERT INTO physical_person (name, cpf, birth_date, number_phone, number_phone_reserve, cep, city, district, localization, service_provider) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO physical_person (name, cpf, group_name, birth_date, number_phone, number_phone_reserve, cep, city, district, localization, number_localization, service_provider, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       db.query(
         data,
         [
           name,
           cpf,
+          group_name,
           birth_date,
           number_phone,
           number_phone_reserve,
@@ -77,7 +81,9 @@ module.exports = {
           city,
           district,
           localization,
+          number_localization,
           service_provider,
+          observation,
         ],
         (error, results) => {
           if (error) {
@@ -95,6 +101,7 @@ module.exports = {
     id_user,
     name,
     cpf,
+    group_name,
     birth_date,
     number_phone,
     number_phone_reserve,
@@ -102,18 +109,21 @@ module.exports = {
     city,
     district,
     localization,
+    number_localization,
     service_provider,
+    observation,
     active
   ) => {
     return new Promise((accepted, reject) => {
       const query =
-        "UPDATE physical_person SET name = ?, cpf = ?, birth_date = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?, service_provider = ?, active = ? WHERE id = ?";
+        "UPDATE physical_person SET name = ?, cpf = ?, group_name = ?, birth_date = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?, number_localization = ?, service_provider = ?, observation = ?, active = ? WHERE id = ?";
 
       db.query(
         query,
         [
           name,
           cpf,
+          group_name,
           birth_date,
           number_phone,
           number_phone_reserve,
@@ -121,7 +131,9 @@ module.exports = {
           city,
           district,
           localization,
+          number_localization,
           service_provider,
+          observation,
           active,
           id_user,
         ],
@@ -137,39 +149,44 @@ module.exports = {
     });
   },
 
-
   // Pessoa Jurídica
 
   insertProviderLegal: (
     social_reason,
-    cnpj,
     fantasy_name,
+    cnpj,
     state_registration,
+    group_name,
     number_phone,
     number_phone_reserve,
     cep,
     city,
     district,
     localization,
-    service_provider
+    number_localization,
+    service_provider,
+    observation
   ) => {
     return new Promise((accepted, reject) => {
       const data =
-        "INSERT INTO legal_person (social_reason, cnpj, fantasy_name, state_registration, number_phone, number_phone_reserve, cep, city, district, localization, service_provider) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO legal_person (social_reason, fantasy_name, cnpj, state_registration, group_name, number_phone, number_phone_reserve, cep, city, district, localization, number_localization, service_provider, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       db.query(
         data,
         [
           social_reason,
-          cnpj,
           fantasy_name,
+          cnpj,
           state_registration,
+          group_name,
           number_phone,
           number_phone_reserve,
           cep,
           city,
           district,
           localization,
-          service_provider
+          number_localization,
+          service_provider,
+          observation,
         ],
         (error, results) => {
           if (error) {
@@ -200,23 +217,26 @@ module.exports = {
   },
 
   updateLegal: (
-    id_user,
+    id,
     social_reason,
     fantasy_name,
     cnpj,
     state_registration,
+    group_name,
     number_phone,
     number_phone_reserve,
     cep,
     city,
     district,
     localization,
+    number_localization,
     service_provider,
-    active,
+    observation,
+    active
   ) => {
     return new Promise((accepted, reject) => {
       const query =
-        "UPDATE legal_person SET social_reason = ?, fantasy_name = ?, cnpj = ?, state_registration = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?, service_provider = ?, active = ? WHERE id = ?";
+        "UPDATE legal_person SET social_reason = ?, fantasy_name = ?, cnpj = ?, state_registration = ?, group_name = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?,  number_localization = ?, service_provider = ?, observation = ?, active = ? WHERE id = ?";
 
       db.query(
         query,
@@ -225,15 +245,18 @@ module.exports = {
           fantasy_name,
           cnpj,
           state_registration,
+          group_name,
           number_phone,
           number_phone_reserve,
           cep,
           city,
           district,
           localization,
+          number_localization,
           service_provider,
+          observation,
           active,
-          id_user,
+          id,
         ],
 
         (error, results) => {

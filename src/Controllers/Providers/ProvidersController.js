@@ -38,6 +38,7 @@ module.exports = {
     const {
       name,
       cpf,
+      group_name,
       birth_date,
       number_phone,
       number_phone_reserve,
@@ -45,7 +46,9 @@ module.exports = {
       city,
       district,
       localization,
+      number_localization,
       service_provider,
+      observation,
     } = req.body;
 
     if (
@@ -73,6 +76,7 @@ module.exports = {
       const registerProvider = await providersService.insert(
         name,
         cpf,
+        group_name,
         birth_date,
         number_phone,
         number_phone_reserve,
@@ -80,14 +84,16 @@ module.exports = {
         city,
         district,
         localization,
-        service_provider
+        number_localization,
+        service_provider,
+        observation
       );
 
       res.json({
-        message: "Prestador registrado com sucesso",
-        user: {
+        data: {
           name,
           cpf,
+          group_name,
           birth_date,
           number_phone,
           number_phone_reserve,
@@ -95,7 +101,9 @@ module.exports = {
           city,
           district,
           localization,
+          number_localization,
           service_provider,
+          observation,
         },
       });
     } catch (error) {
@@ -105,10 +113,11 @@ module.exports = {
   },
 
   update: async (req, res) => {
-    const id_user = req.params.id; 
+    const id_user = req.params.id;
     const {
       name,
       cpf,
+      group_name,
       birth_date,
       number_phone,
       number_phone_reserve,
@@ -116,7 +125,9 @@ module.exports = {
       city,
       district,
       localization,
+      number_localization,
       service_provider,
+      observation,
       active,
     } = req.body;
 
@@ -135,6 +146,7 @@ module.exports = {
       city &&
       district &&
       localization &&
+      number_localization &&
       service_provider &&
       active
     ) {
@@ -143,6 +155,7 @@ module.exports = {
           id_user,
           name,
           cpf,
+          group_name,
           birth_date,
           number_phone,
           number_phone_reserve,
@@ -150,7 +163,9 @@ module.exports = {
           city,
           district,
           localization,
+          number_localization,
           service_provider,
+          observation,
           active
         );
 
@@ -177,13 +192,16 @@ module.exports = {
       fantasy_name,
       cnpj,
       state_registration,
+      group_name,
       number_phone,
       number_phone_reserve,
       cep,
       city,
       district,
       localization,
+      number_localization,
       service_provider,
+      observation,
     } = req.body;
 
     if (
@@ -202,32 +220,37 @@ module.exports = {
     try {
       const registerProviderLegal = await providersService.insertProviderLegal(
         social_reason,
-        cnpj,
         fantasy_name,
+        cnpj,
         state_registration,
+        group_name,
         number_phone,
         number_phone_reserve,
         cep,
         city,
         district,
         localization,
-        service_provider
+        number_localization,
+        service_provider,
+        observation
       );
 
       res.json({
-        message: "Prestador registrado com sucesso",
-        user: {
+        provider: {
           social_reason,
-          cnpj,
           fantasy_name,
+          cnpj,
           state_registration,
+          group_name,
           number_phone,
           number_phone_reserve,
           cep,
           city,
           district,
           localization,
+          number_localization,
           service_provider,
+          observation,
         },
       });
     } catch (error) {
@@ -261,19 +284,22 @@ module.exports = {
   },
 
   updateLegal: async (req, res) => {
-    const id_user = req.params.id; // Capturando o ID da rota
+    const id_user = req.params.id;
     const {
       social_reason,
       fantasy_name,
       cnpj,
       state_registration,
+      group_name,
       number_phone,
       number_phone_reserve,
       cep,
       city,
       district,
       localization,
+      number_localization,
       service_provider,
+      observation,
       active,
     } = req.body;
 
@@ -301,13 +327,16 @@ module.exports = {
           fantasy_name,
           cnpj,
           state_registration,
+          group_name,
           number_phone,
           number_phone_reserve,
           cep,
           city,
           district,
           localization,
+          number_localization,
           service_provider,
+          observation,
           active
         );
 
@@ -323,7 +352,7 @@ module.exports = {
       }
     } else {
       json.error = "Preencha todos os campos!";
-      console.log(json.error); 
+      console.log(json.error);
       res.status(400).json(json);
     }
   },
