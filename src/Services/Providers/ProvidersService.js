@@ -37,7 +37,12 @@ module.exports = {
   getProvidersSingle: () => {
     return new Promise((resolve, reject) => {
       db.query(
-        "SELECT name FROM sp_physical_person where active = 1 ORDER BY id DESC",
+        `
+          SELECT name AS name FROM sp_physical_person WHERE active = 1
+          UNION
+          SELECT social_reason AS name FROM sp_legal_person WHERE active = 1
+          ORDER BY name DESC;
+        `,
         (error, results) => {
           if (error) {
             reject(error);

@@ -54,8 +54,12 @@ router.put("/update-provider-legal/:id", providersController.updateLegal);
 
 // Fornecedores
 router.get("/suppliers", suppliersController.get);
+router.get("/supplier-legal", suppliersController.getLegal);
 router.get("/supplier", suppliersController.getSingle);
 router.post("/new-suppliers", suppliersController.insert);
+router.post("/new-suppliers-legal", suppliersController.insertLegal);
+router.put("/update-suppliers/:id", suppliersController.update);
+router.put("/update-suppliers-legal/:id", suppliersController.updateLegal);
 
 // Registros de serviços realizados
 router.get("/services", registerServiceController.getServices);
