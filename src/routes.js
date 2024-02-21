@@ -7,12 +7,12 @@ router.use(bodyParser.json());
 
 const loginController = require("./Controllers/Login/loginController");
 const userController = require("./Controllers/Users/UsersController");
-const categoryController = require("./Controllers/Category/CategoryController");
-const subcategoryController = require("./Controllers/SubCategory/SubCategoryController");
+const categoryController = require("./Controllers/Menu/Category/CategoryController");
+const subcategoryController = require("./Controllers/Menu/SubCategory/SubCategoryController");
 const accountsBankController = require("./Controllers/Accounts/AccountsBankController");
 const registerServiceController = require("./Controllers/RegisterService/RegisterServiceController");
-const providersController = require("./Controllers/Providers/ProvidersController");
-const suppliersController = require("./Controllers/Supplier/SupplierController");
+const providersController = require("./Controllers/Register-external/Providers/ProvidersController");
+const suppliersController = require("./Controllers/Register-external/Supplier/SupplierController");
 
 // Login
 router.post("/login", loginController.login);

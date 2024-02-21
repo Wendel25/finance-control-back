@@ -1,10 +1,10 @@
-const db = require("../../db");
+const db = require("../../../db");
 
 module.exports = {
-  getDataProviders: (page, pageSize) => {
+  getDataSupplier: (page, pageSize) => {
     return new Promise((resolve, reject) => {
       const offset = (page - 1) * pageSize;
-      const query = `SELECT * FROM sp_physical_person ORDER BY id DESC LIMIT ? OFFSET ?`;
+      const query = `SELECT * FROM supplier_physical_person ORDER BY id DESC LIMIT ? OFFSET ?`;
 
       db.query(query, [pageSize, offset], (error, results) => {
         if (error) {
@@ -17,31 +17,14 @@ module.exports = {
     });
   },
 
-  getUserByCPF: (cpf) => {
-    return new Promise((accepted, reject) => {
-      db.query(
-        "SELECT * FROM sp_physical_person WHERE cpf = ?",
-        [cpf],
-        (error, results) => {
-          if (error) {
-            reject(error);
-            console.log("Erro ao buscar cpf");
-          } else {
-            accepted(results);
-          }
-        }
-      );
-    });
-  },
-
-  getProvidersSingle: () => {
+  getSupplierSingle: () => {
     return new Promise((resolve, reject) => {
       db.query(
         `
-          SELECT name AS name FROM sp_physical_person WHERE active = 1
-          UNION
-          SELECT social_reason AS name FROM sp_legal_person WHERE active = 1
-          ORDER BY name DESC;
+        SELECT name AS name FROM supplier_physical_person WHERE active = 1
+        UNION
+        SELECT social_reason AS name FROM supplier_legal_person WHERE active = 1
+        ORDER BY name DESC;
         `,
         (error, results) => {
           if (error) {
@@ -59,7 +42,6 @@ module.exports = {
     name,
     cpf,
     group_name,
-    birth_date,
     number_phone,
     number_phone_reserve,
     cep,
@@ -72,14 +54,13 @@ module.exports = {
   ) => {
     return new Promise((accepted, reject) => {
       const data =
-        "INSERT INTO sp_physical_person (name, cpf, group_name, birth_date, number_phone, number_phone_reserve, cep, city, district, localization, number_localization, service_provider, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO supplier_physical_person (name, cpf, group_name, number_phone, number_phone_reserve, cep, city, district, localization, number_localization, service_provider, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       db.query(
         data,
         [
           name,
           cpf,
           group_name,
-          birth_date,
           number_phone,
           number_phone_reserve,
           cep,
@@ -107,7 +88,6 @@ module.exports = {
     name,
     cpf,
     group_name,
-    birth_date,
     number_phone,
     number_phone_reserve,
     cep,
@@ -121,7 +101,7 @@ module.exports = {
   ) => {
     return new Promise((accepted, reject) => {
       const query =
-        "UPDATE sp_physical_person SET name = ?, cpf = ?, group_name = ?, birth_date = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?, number_localization = ?, service_provider = ?, observation = ?, active = ? WHERE id = ?";
+        "UPDATE supplier_physical_person SET name = ?, cpf = ?, group_name = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?, number_localization = ?, service_provider = ?, observation = ?, active = ? WHERE id = ?";
 
       db.query(
         query,
@@ -129,7 +109,6 @@ module.exports = {
           name,
           cpf,
           group_name,
-          birth_date,
           number_phone,
           number_phone_reserve,
           cep,
@@ -154,9 +133,24 @@ module.exports = {
     });
   },
 
-  // Pessoa Jurídica
+  // Pessoa Juridica
+  getDataSupplierLegal: (page, pageSize) => {
+    return new Promise((resolve, reject) => {
+      const offset = (page - 1) * pageSize;
+      const query = `SELECT * FROM supplier_legal_person ORDER BY id DESC LIMIT ? OFFSET ?`;
 
-  insertProviderLegal: (
+      db.query(query, [pageSize, offset], (error, results) => {
+        if (error) {
+          console.error("Erro ao buscar registros:", error);
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  },
+
+  insertLegal: (
     social_reason,
     fantasy_name,
     cnpj,
@@ -169,12 +163,12 @@ module.exports = {
     district,
     localization,
     number_localization,
-    service_provider,
+    service,
     observation
   ) => {
     return new Promise((accepted, reject) => {
       const data =
-        "INSERT INTO sp_legal_person (social_reason, fantasy_name, cnpj, state_registration, group_name, number_phone, number_phone_reserve, cep, city, district, localization, number_localization, service_provider, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO supplier_legal_person (social_reason, fantasy_name, cnpj, state_registration, group_name, number_phone, number_phone_reserve, cep, city, district, localization, number_localization, service, observation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       db.query(
         data,
         [
@@ -190,7 +184,7 @@ module.exports = {
           district,
           localization,
           number_localization,
-          service_provider,
+          service,
           observation,
         ],
         (error, results) => {
@@ -205,24 +199,8 @@ module.exports = {
     });
   },
 
-  getDataProvidersLegal: (page, pageSize) => {
-    return new Promise((resolve, reject) => {
-      const offset = (page - 1) * pageSize;
-      const query = `SELECT * FROM sp_legal_person ORDER BY id DESC LIMIT ? OFFSET ?`;
-
-      db.query(query, [pageSize, offset], (error, results) => {
-        if (error) {
-          console.error("Erro ao buscar registros:", error);
-          reject(error);
-        } else {
-          resolve(results);
-        }
-      });
-    });
-  },
-
   updateLegal: (
-    id,
+    id_user,
     social_reason,
     fantasy_name,
     cnpj,
@@ -235,13 +213,13 @@ module.exports = {
     district,
     localization,
     number_localization,
-    service_provider,
+    service,
     observation,
     active
   ) => {
     return new Promise((accepted, reject) => {
       const query =
-        "UPDATE sp_legal_person SET social_reason = ?, fantasy_name = ?, cnpj = ?, state_registration = ?, group_name = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?,  number_localization = ?, service_provider = ?, observation = ?, active = ? WHERE id = ?";
+        "UPDATE supplier_legal_person SET social_reason = ?, fantasy_name = ?, cnpj = ?, state_registration = ?, group_name = ?, number_phone = ?, number_phone_reserve = ?, cep = ?, city = ?, district = ?, localization = ?, number_localization = ?, service = ?, observation = ?, active = ? WHERE id = ?";
 
       db.query(
         query,
@@ -258,10 +236,10 @@ module.exports = {
           district,
           localization,
           number_localization,
-          service_provider,
+          service,
           observation,
           active,
-          id,
+          id_user,
         ],
 
         (error, results) => {

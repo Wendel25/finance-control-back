@@ -1,4 +1,4 @@
-const providersService = require("../../Services/Providers/ProvidersService");
+const providersService = require("../../../Services/Register-external/Providers/ProvidersService");
 
 module.exports = {
   //API PAGINADA

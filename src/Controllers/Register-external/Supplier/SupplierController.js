@@ -1,4 +1,4 @@
-const supplierService = require("../../Services/Supplier/SupplierService");
+const supplierService = require("../../../Services/Register-external/Supplier/SupplierService");
 
 module.exports = {
   get: async (req, res) => {
