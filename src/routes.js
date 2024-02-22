@@ -13,6 +13,8 @@ const accountsBankController = require("./Controllers/Accounts/AccountsBankContr
 const registerServiceController = require("./Controllers/RegisterService/RegisterServiceController");
 const providersController = require("./Controllers/Register-external/Providers/ProvidersController");
 const suppliersController = require("./Controllers/Register-external/Supplier/SupplierController");
+const categoryProductsController = require("./Controllers/Products/Category/ProductCategoryController");
+const productsController = require("./Controllers/Products/Itens-products/ProductsController");
 
 // Login
 router.post("/login", loginController.login);
@@ -60,6 +62,16 @@ router.post("/new-suppliers", suppliersController.insert);
 router.post("/new-suppliers-legal", suppliersController.insertLegal);
 router.put("/update-suppliers/:id", suppliersController.update);
 router.put("/update-suppliers-legal/:id", suppliersController.updateLegal);
+
+// Categoria de produtos
+router.get('/product-category', categoryProductsController.get);
+router.post('/new-product-category', categoryProductsController.insert);
+router.delete('/product-category/:id', categoryProductsController.delete);
+
+// Produtos
+router.get('/products', productsController.getProducts);
+router.get('/product-suppliers', productsController.getSuppliers);
+router.post('/new-product', productsController.insert);
 
 // Registros de serviços realizados
 router.get("/services", registerServiceController.getServices);

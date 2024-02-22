@@ -1,44 +1,62 @@
-const Product = require("../../../models/Products/Product/Product");
+const productService = require("../../../Services/Products/Itens-products/ProductsService");
 
-const productController = {
-  async insert(req, res) {
-    try {
-      const {
-        product,
-        category,
-        price,
-        amount,
-        supplier,
-        date_purchase,
-        description,
-      } = req.body;
+module.exports = {
+  getProducts: async (req, res) => {
+    const products = await productService.getProducts();
 
-      const newProduct = await Product.create({
-        product,
-        category,
-        price,
-        amount,
-        supplier,
-        date_purchase,
-        description,
-      });
+    const json = {
+      error: "",
+      results: products,
+    };
 
-      res.status(201).json({
-        id: newProduct.id,
-        product: newProduct.product,
-        category: newProduct.category,
-        price: newProduct.price,
-        amount: newProduct.amount,
-        supplier: newProduct.supplier,
-        date_purchase: newProduct.date_purchase,
-        description: newProduct.description,
-        active: newProduct.active,
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Erro ao inserir produto no banco de dados" });
+    res.json(json);
+  },
+
+  getSuppliers: async (req, res) => {
+    const suppliers = await productService.getSuppliers();
+
+    const json = {
+      error: "",
+      results: suppliers,
+    };
+
+    res.json(json);
+  },
+
+  insert: async (req, res) => {
+    const {
+      product,
+      category,
+      price,
+      amount,
+      supplier,
+      date_purchase,
+      description,
+    } = req.body;
+
+    if (product && category && price && amount && supplier && date_purchase) {
+      try {
+        const newProduct = {
+          product,
+          category,
+          price,
+          amount,
+          supplier,
+          date_purchase,
+          description,
+        };
+
+        const products = await productService.insert(newProduct);
+
+        res.status(201).json(products);
+      } catch (error) {
+        console.log("Erro ao cadastrar produto");
+      }
+    } else {
+      console.log("Campos obrigatórios");
+      return res
+        .status(400)
+        .json({ error: "Preencha todos os campos antes de enviar" });
     }
   },
 };
-
-module.exports = productController;
