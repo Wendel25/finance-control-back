@@ -140,7 +140,6 @@ module.exports = {
       id_user &&
       name &&
       cpf &&
-      birth_date &&
       number_phone &&
       cep &&
       city &&
